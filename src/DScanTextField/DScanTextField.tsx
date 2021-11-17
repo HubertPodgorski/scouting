@@ -12,7 +12,7 @@ const DScanTextField = ({ onDScanReadoutChange }: Props) => {
     <TextField
       sx={{ height: "100%" }}
       id="outlined-multiline-static"
-      label="Multiline"
+      label="D-scan raw data"
       multiline
       rows={4}
       defaultValue="Put ur D-scan results here"
