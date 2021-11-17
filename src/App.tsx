@@ -26,6 +26,7 @@ function App() {
   const handleOnSitePick = (site: SiteCode) => {
     setSite(site);
   };
+  console.log(navigator.clipboard);
 
   const handleDScanReadoutChange = (newDScanReadout: string) =>
     setDScanReadout(newDScanReadout);
