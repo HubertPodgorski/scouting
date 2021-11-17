@@ -5,6 +5,10 @@ const groupShips: Ship[] = [
   "Basilisk",
   "Rattlesnake",
   "Loki",
+  "Vindicator",
+  "Scimitar",
+  "Kronos",
+  "Eos",
 ];
 const waveWrecks: Wreck[] = [
   "Deltole",
@@ -32,7 +36,16 @@ export type Wreck =
 
 export type SiteCode = "tpph" | "tcrc" | "nrf";
 
-export type Ship = "Nestor" | "Dominix" | "Basilisk" | "Rattlesnake" | "Loki";
+export type Ship =
+  | "Nestor"
+  | "Dominix"
+  | "Basilisk"
+  | "Rattlesnake"
+  | "Loki"
+  | "Vindicator"
+  | "Scimitar"
+  | "Kronos"
+  | "Eos";
 
 const relevantResults = [...groupShips, ...waveWrecks];
 
@@ -141,17 +154,33 @@ export const getSiteResult = (
     }
 
     if (wrecks["Niarja"] >= 2) {
-      result = "~~ Full shield";
+      result = "Propably Full shield";
 
       if (wrecks["Niarja"] >= 3) {
-        result = "~~ No shield";
+        result = "Propably No shield";
 
         if (wrecks["Niarja"] >= 4) {
-          result = "~~ No armor";
+          result = "Propably No armor";
         }
       }
     }
   }
 
   return result;
+};
+
+export const getFleetEstimate = (groupedData: GroupedData): string => {
+  const ships = groupedData.ships;
+  if (ships["Eos"] >= 1 || ships["Nestor"] > 1)
+    return "Can be TDF or Chinese fleet - check names";
+
+  if (ships["Dominix"] >= 3)
+    return "Atleast 3 Dominixes - can be Dominix Boxer";
+
+  if (ships["Basilisk"] >= 2 || ships["Rattlesnake"] >= 3)
+    return "Atleast 2 Basi or 3 Rattlesnakes = can be NGA - check Cyrillic names";
+
+  if (ships["loki"] >= 2) return "Atleast 2 Lokis - can be Candeez";
+
+  return "Sorry - cannot tell what fleet is running";
 };

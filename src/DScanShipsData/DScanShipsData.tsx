@@ -13,27 +13,27 @@ interface Props {
   groupedData: GroupedData;
 }
 
-const DScanData = ({ groupedData }: Props) => (
+const DScanShipsData = ({ groupedData }: Props) => (
   <TableContainer component={Paper}>
     <Table aria-label="simple table">
       <TableHead>
         <TableRow>
-          <TableCell>Wreck Name</TableCell>
-          <TableCell align="right">Wreck Count</TableCell>
+          <TableCell>Ship Name</TableCell>
+          <TableCell align="right">Ship Count</TableCell>
         </TableRow>
       </TableHead>
 
       <TableBody>
-        {Object.entries(groupedData.wrecks).map(
-          ([wreckName, wreckCount], index) => (
+        {Object.entries(groupedData.ships).map(
+          ([shipName, shipsCount], index) => (
             <TableRow
               key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {wreckName}
+                {shipName}
               </TableCell>
-              <TableCell align="right">{wreckCount}</TableCell>
+              <TableCell align="right">{shipsCount}</TableCell>
             </TableRow>
           )
         )}
@@ -42,4 +42,4 @@ const DScanData = ({ groupedData }: Props) => (
   </TableContainer>
 );
 
-export default DScanData;
+export default DScanShipsData;
