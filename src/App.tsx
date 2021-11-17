@@ -20,7 +20,10 @@ function App() {
     wrecks: {},
   });
   const [site, setSite] = useState<SiteCode | "">("");
-  const [currentSiteResult, setCurrentSiteResult] = useState<string>("");
+  const [currentSiteResult, setCurrentSiteResult] = useState<{
+    reason: string;
+    result: string;
+  }>({ reason: "", result: "" });
   const [currentFleetResult, setCurrentFleetResult] = useState<string>("");
 
   const handleOnSitePick = (site: SiteCode) => {
@@ -99,7 +102,16 @@ function App() {
 
         <DScanShipsData groupedData={groupedData} />
 
-        <div>{currentSiteResult}</div>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gridGap: "5px",
+          }}
+        >
+          <b>{currentSiteResult.reason}</b>
+          <div>{currentSiteResult.result}</div>
+        </Box>
 
         <div>{currentFleetResult}</div>
       </Box>

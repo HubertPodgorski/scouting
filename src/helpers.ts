@@ -110,21 +110,34 @@ export const mapDScanReadout = (dScanReadout: string): GroupedData => {
 export const getSiteResult = (
   groupedData: GroupedData,
   site: SiteCode
-): string => {
-  let result = "Not enough data";
+): { reason: string; result: string } => {
+  let data = {
+    reason: "d-scan too empty or not relevant data",
+    result: "Not enough data",
+  };
 
   const wrecks = groupedData.wrecks;
 
   if (site === "tpph") {
     if (wrecks["Mara"] >= 1 || wrecks["Auga"] >= 3) {
-      result = "They are atleast in the second room";
+      data = {
+        reason: "Atleast one Mara OR atleast 3 Auga",
+        result: "They are atleast in the second room",
+      };
 
       if (wrecks["Deltole"] >= 2) {
-        result = "They are atleast in the third room, second wave";
+        data = {
+          reason: "(Atleast one Mara OR atleast 3 Auga) AND atleast 2 Deltole",
+          result: "they are atleast in the third room, second wave",
+        };
 
         if (wrecks["Arnon"] >= 1) {
-          result =
-            "They are atleast in the middle of final wave, likely on tower";
+          data = {
+            reason:
+              "(Atleast one Mara OR atleast 3 Auga) AND atleast 2 Deltole AND atleast one Arnon",
+            result:
+              "they are atleast in the middle of final wave, likely on tower",
+          };
         }
       }
     }
@@ -132,13 +145,24 @@ export const getSiteResult = (
 
   if (site === "nrf") {
     if (wrecks["Uitra"] >= 1) {
-      result = "They are midway through the second wave";
+      data = {
+        reason: "Atleast one Uitra",
+        result: "They are midway through the second wave",
+      };
 
       if (wrecks["Mara"] > 2 || wrecks["Vylade"] > 2) {
-        result = "They are minimum  on the third wave";
+        data = {
+          reason:
+            "Atleast one Uitra AND (more than 2 Mara OR more than 2 Vylade)",
+          result: "They are minimum  on the third wave",
+        };
 
         if (wrecks["Intaki"] >= 1 || wrecks["Eystur"] >= 1) {
-          result = "They are on final wave";
+          data = {
+            reason:
+              "Atleast one Uitra AND (more than 2 Mara OR more than 2 Vylade) AND (atealst on Intaki OR atleast one Eystur)",
+            result: "They are on final wave",
+          };
         }
       }
     }
@@ -146,27 +170,44 @@ export const getSiteResult = (
 
   if (site === "tcrc") {
     if (Object.keys(wrecks).length <= 0) {
-      result = "They just entered";
+      data = {
+        reason: "No wrecks",
+        result: "They just entered",
+      };
     }
 
     if (wrecks["Deltole"] >= 5 || wrecks["Outuni"] >= 2) {
-      result = "They are propably on tower";
+      data = {
+        reason: "Atleast 5 Deltole OR atleast 2 Outuni",
+        result: "They are propably on tower",
+      };
     }
 
     if (wrecks["Niarja"] >= 2) {
-      result = "Propably Full shield";
+      data = {
+        reason: "(Atleast 5 Deltole OR atleast 2 Outuni) AND atleast 2 Niarja",
+        result: "Propably Full shield",
+      };
 
       if (wrecks["Niarja"] >= 3) {
-        result = "Propably No shield";
+        data = {
+          reason:
+            "(Atleast 5 Deltole OR atleast 2 Outuni) AND atleast 3 Niarja",
+          result: "Propably No shield",
+        };
 
         if (wrecks["Niarja"] >= 4) {
-          result = "Propably No armor";
+          data = {
+            reason:
+              "(Atleast 5 Deltole OR atleast 2 Outuni) AND atleast 4 Niarja",
+            result: "Propably No armor",
+          };
         }
       }
     }
   }
 
-  return result;
+  return data;
 };
 
 export const getFleetEstimate = (groupedData: GroupedData): string => {
