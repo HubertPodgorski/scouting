@@ -8,7 +8,6 @@ import {
   SiteCode,
 } from "./helpers";
 import DScanData from "./DScanData/DScanData";
-import style from "./App.module.scss";
 import { Box } from "@mui/system";
 import { Container } from "@mui/material";
 

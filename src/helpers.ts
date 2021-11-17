@@ -98,7 +98,7 @@ export const getSiteResult = (
   groupedData: GroupedData,
   site: SiteCode
 ): string => {
-  let result = "";
+  let result = "Not enough data";
 
   const wrecks = groupedData.wrecks;
 
